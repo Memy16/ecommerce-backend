@@ -1,0 +1,68 @@
+[
+  {
+    "title": "Remera BTS",
+    "description": "Remera con diseño de BTS",
+    "code": "A01",
+    "price": 29.99,
+    "status": true,
+    "stock": 100,
+    "category": "ropa",
+    "thumbnails": [
+      "https://i.ibb.co/MhSZfGk/235700e7ba20820c4871360619d12c13.png"
+    ]
+  },
+  {
+    "title": "PROOF - BTS",
+    "description": "Álbum de BTS - Proof",
+    "code": "B02",
+    "price": 49.99,
+    "status": true,
+    "stock": 50,
+    "category": "albums",
+    "thumbnails": [
+      "https://i.ibb.co/chfWJCM/6118fdba65161fa21b3c4dad56d43f95.png"
+    ]
+  },
+  {
+    "title": "The Album - BLACKPINK",
+    "description": "Álbum de BLACKPINK - The Album",
+    "code": "C03",
+    "price": 45.99,
+    "status": true,
+    "stock": 70,
+    "category": "albums",
+    "thumbnails": ["https://i.ibb.co/z72y7GK/Polish-20240313-223607520.jpg"]
+  },
+  {
+    "title": "Remera Mi Feliz Matrimonio",
+    "description": "Remera inspirada en la serie Mi Feliz Matrimonio",
+    "code": "D04",
+    "price": 29.99,
+    "status": true,
+    "stock": 120,
+    "category": "ropa",
+    "thumbnails": [
+      "https://i.ibb.co/X7QKyJZ/ssrco-slim-fit-t-shirt-flatlay-fafafa-ca443f4786-front-wide-portrait-750x1000-bg-f8f8f8.jpg"
+    ]
+  },
+  {
+    "title": "Billetera Suzume",
+    "description": "Billetera con diseño de la pelicula de anime Suzume",
+    "code": "E05",
+    "price": 19.99,
+    "status": true,
+    "stock": 80,
+    "category": "accesorios",
+    "thumbnails": ["https://i.ibb.co/hBG2wYy/productos34-8489.jpg"]
+  },
+  {
+    "title": "Llavero Blackpink",
+    "description": "Llavero con diseño de Blackpink",
+    "code": "F06",
+    "price": 9.99,
+    "status": true,
+    "stock": 150,
+    "category": "accesorios",
+    "thumbnails": ["https://i.ibb.co/S7Jrppb/Polish-20240313-223421385.jpg"]
+  }
+]
