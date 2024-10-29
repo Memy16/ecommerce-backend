@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const filePath = path.join(__dirname, "../data/carrito.json");
+const filePath = path.join(__dirname, "../data/carts.json");
 const productService = require("./productService");
 
 const readCartsFromFile = () => {
