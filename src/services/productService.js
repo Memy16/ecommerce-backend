@@ -1,4 +1,4 @@
-const fs = require("fs");
+const Product = require("../models/Product.model");
 const path = require("path");
 const filePath = path.join(__dirname, "../data/products.json");
 
@@ -11,43 +11,55 @@ const writeProductsToFile = (products) => {
   fs.writeFileSync(filePath, JSON.stringify(products, null, 2), "utf-8");
 };
 
-const getAllProducts = (limit) => {
-  const products = readProductsFromFile();
-  return limit ? products.slice(0, limit) : products;
+const getAllProducts = async (limit) => {
+  try {
+    const products = limit ? await Product.find().limit(limit) : await Product.find();
+    return products;
+  } catch (error) {
+    console.error("Error al obtener los productos:", error);
+    throw error;
+  }
 };
 
-const getProductById = (id) => {
-  const products = readProductsFromFile();
-  return products.find((product) => product.id === id);
+const getProductById = async (id) => {
+  try {
+    const product = await Product.findById(id);
+    return product;
+  } catch (error) {
+    console.error("Error al obtener el producto:", error);
+    throw error;
+  }
 };
 
-const addProduct = (productData) => {
-  const products = readProductsFromFile();
-  const newProduct = {
-    id: Date.now().toString(),
-    ...productData,
-    status: productData.status || true,
-  };
-  products.push(newProduct);
-  writeProductsToFile(products);
-  return newProduct;
+const addProduct = async (productData) => {
+  try {
+    const newProduct = new Product(productData); 
+    await newProduct.save(); 
+    return newProduct;
+  } catch (error) {
+    console.error("Error al agregar el producto:", error);
+    throw error;
+  }
 };
 
-const updateProduct = (id, updatedData) => {
-  const products = readProductsFromFile();
-  const productIndex = products.findIndex((product) => product.id === id);
-  if (productIndex === -1) return null;
-  products[productIndex] = { ...products[productIndex], ...updatedData };
-  writeProductsToFile(products);
-  return products[productIndex];
+const updateProduct = async (id, updatedData) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id, updatedData, { new: true }); 
+    return updatedProduct;
+  } catch (error) {
+    console.error("Error al actualizar el producto:", error);
+    throw error;
+  }
 };
 
-const deleteProduct = (id) => {
-  const products = readProductsFromFile();
-  const newProducts = products.filter((product) => product.id !== id);
-  if (products.length === newProducts.length) return null;
-  writeProductsToFile(newProducts);
-  return true;
+const deleteProduct = async (id) => {
+  try {
+    const result = await Product.findByIdAndDelete(id);
+    return result !== null; 
+  } catch (error) {
+    console.error("Error al eliminar el producto:", error);
+    throw error;
+  }
 };
 
 module.exports = {
