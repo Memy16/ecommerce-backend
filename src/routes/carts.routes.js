@@ -18,7 +18,8 @@ router.put("/:cid", updateCart);
 router.put("/:cid/product/:pid", updateProductQuantityInCart);
 router.delete("/:cid", clearCart);
 
-router.get('/carts/:cid', getCartById); 
-router.post('/add-to-cart/:pid', addProductToCart);
+router.get("/", (req, res) => { 
+  res.send("Vista del carrito de compras"); 
+});
 
 module.exports = router;

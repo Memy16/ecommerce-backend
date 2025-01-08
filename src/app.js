@@ -13,22 +13,32 @@ const PORT = 8080;
 const hbs = create({
   layoutsDir: path.join(__dirname, "views/layouts"), 
   defaultLayout: "main",
-  extname: '.handlebars',
+  extname: ".handlebars",
 });
 
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
-app.set('views', path.join(__dirname, 'views'));
+app.set("views", path.join(__dirname, "views"));
 
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 
 app.get("/", (req, res) => {
-  const products = productService.getAllProducts();
-  res.render("main", { products });
+  res.render("inicio"); 
+});
+
+app.get("/productos", async (req, res) => { 
+  try { 
+    const products = await productService.getAllProducts(); 
+    console.log(products); 
+    res.render("home", { products }); 
+  } catch (error) { 
+    console.error("Error al obtener los productos:", error); 
+    res.status(500).send("Error al obtener los productos"); 
+  } 
 });
 
 server.listen(PORT, () => {
@@ -37,3 +47,4 @@ server.listen(PORT, () => {
 
 const connectDB = require('./db');
 connectDB();
+

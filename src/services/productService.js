@@ -1,23 +1,49 @@
 const Product = require("../models/Product.model");
-const path = require("path");
-const filePath = path.join(__dirname, "../data/products.json");
 
-const readProductsFromFile = () => {
-  const data = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(data);
-};
+const getAllProducts = async () => { 
+  try { 
+    const products = await Product.find({}); 
+    return products;  
+  } catch (error) { 
+    console.error("Error al obtener productos:", error); 
+    throw error;  
+    } 
+  }; 
+  
+  module.exports = { 
+    getAllProducts, 
+  };
 
-const writeProductsToFile = (products) => {
-  fs.writeFileSync(filePath, JSON.stringify(products, null, 2), "utf-8");
-};
+  const getAllProductsPaginated = async (limit = 10, page = 1, sort = null, query = {}) => { 
+    try { 
+      const options = { 
+        limit: parseInt(limit), 
+        skip: (parseInt(page) - 1) * parseInt(limit), 
+      };
 
-const getAllProducts = async (limit) => {
-  try {
-    const products = limit ? await Product.find().limit(limit) : await Product.find();
-    return products;
+    if (sort) {
+      options.sort = { price: sort === 'asc' ? 1 : -1 };
+    }
+
+    const products = await Product.find(query, null, options);
+    const totalProducts = await Product.countDocuments(query);
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    return {
+      status: 'success',
+      payload: products,
+      totalPages: totalPages,
+      prevPage: page > 1 ? page - 1 : null,
+      nextPage: page < totalPages ? page + 1 : null,
+      page: parseInt(page),
+      hasPrevPage: page > 1,
+      hasNextPage: page < totalPages,
+      prevLink: page > 1 ? `/api/products?limit=${limit}&page=${page - 1}&sort=${sort}&query=${JSON.stringify(query)}` : null,
+      nextLink: page < totalPages ? `/api/products?limit=${limit}&page=${page + 1}&sort=${sort}&query=${JSON.stringify(query)}` : null
+    };
   } catch (error) {
     console.error("Error al obtener los productos:", error);
-    throw error;
+    return { status: 'error', message: error.message };
   }
 };
 
@@ -64,7 +90,7 @@ const deleteProduct = async (id) => {
 
 module.exports = {
   getAllProducts,
-  getProductById,
+  getProductById, 
   addProduct,
   updateProduct,
   deleteProduct,

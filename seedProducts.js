@@ -6,7 +6,7 @@ const connectDB = require('./db');
 const seedProducts = async () => {
   try {
     await connectDB();
-    await Product.deleteMany(); // Limpia la colección antes de agregar nuevos datos.
+    await Product.deleteMany(); 
     await Product.insertMany(products);
     console.log('Productos agregados a MongoDB');
     process.exit();
